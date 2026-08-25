@@ -48,6 +48,9 @@ AP.CARDS = {
       ["AAQ structure","Six parts: method, operational definition, interpret a statistic, ethical guideline plus application, generalizability, and how a finding supports or refutes a concept."],
       ["EBQ structure","Claim, then evidence from one source with explanation, then evidence from a DIFFERENT source with a DIFFERENT concept explained."],
       ["Why definitions score zero on the EBQ","The rubric requires application. You must connect the specific finding to the specific claim through a mechanism, not restate what a term means."],
-      ["Generalizability answers","Cite real participant demographics from the source. “Small sample size” alone almost never earns the point."]
+      ["Generalizability answers","Cite real participant demographics from the source. “Small sample size” alone almost never earns the point."],
+      ["Negative reinforcement vs punishment","Negative reinforcement REMOVES something aversive to INCREASE a behavior (buckling your seatbelt to stop the beeping). Punishment decreases behavior. “Negative” never means “bad” or “punishment.”"],
+      ["Which schedule resists extinction best?","Variable ratio — reward after an unpredictable number of responses (slot machines). It produces the highest, steadiest response rate and is the slowest to extinguish once reinforcement stops."],
+      ["Shaping","Reinforcing successive approximations toward a target behavior. Required when the organism would otherwise never emit the full behavior on its own to be reinforced."]
     ]
   };
