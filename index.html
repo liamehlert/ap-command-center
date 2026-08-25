@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Liam's AP Command Center</title>
+<meta name="description" content="A study system for six AP courses: practice, spaced repetition, free-response rubric drills, an assignment tracker, and vetted video resources.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="css/styles.css">
+
+<!-- PWA -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#F1F0F5" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121019" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="icons/favicon.png" sizes="64x64" type="image/png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Command">
+<meta name="mobile-web-app-capable" content="yes">
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="eyebrow" id="stamp">Six APs &middot; May 2027</div>
+    <h1>Command <em>Center</em></h1>
+    <button class="btn ghost sm" id="install" hidden style="align-self:flex-start;margin-top:4px">Install as an app</button>
+  </header>
+
+  <nav class="tabs" role="tablist">
+    <button role="tab" data-go="today" aria-selected="true">Today</button>
+    <button role="tab" data-go="practice" aria-selected="false">Practice</button>
+    <button role="tab" data-go="cards" aria-selected="false">Cards</button>
+    <button role="tab" data-go="write" aria-selected="false">Write</button>
+    <button role="tab" data-go="track" aria-selected="false">Tracker</button>
+    <button role="tab" data-go="watch" aria-selected="false">Watch</button>
+  </nav>
+
+  <!-- ============ TODAY ============ -->
+  <section class="panel on" id="p-today">
+    <div class="sec-head">
+      <h2>Where things stand</h2>
+      <p>Everything below is computed from what you've actually done in here. Nothing is guesswork.</p>
+    </div>
+    <div class="stack" style="gap:26px">
+      <div>
+        <div class="eyebrow" style="padding-bottom:9px">Days until each exam</div>
+        <div class="countdown" id="cd"></div>
+      </div>
+      <div>
+        <div class="eyebrow" style="padding-bottom:9px">Right now</div>
+        <div class="stack" id="dues"></div>
+      </div>
+      <div>
+        <div class="eyebrow" style="padding-bottom:9px">Weak spots</div>
+        <div class="stack" id="weak"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PRACTICE ============ -->
+  <section class="panel" id="p-practice">
+    <div id="pr-home">
+      <div class="sec-head">
+        <h2>Practice</h2>
+        <p>Questions built from the mistakes AP readers report every year. Not content recall &mdash; the scoring traps that cost people points they'd otherwise earn.</p>
+      </div>
+      <div class="picker" id="pr-picker"></div>
+    </div>
+    <div id="pr-quiz" style="display:none">
+      <div class="qhead">
+        <button class="linky" id="pr-back">&larr; All subjects</button>
+        <span class="qtag" id="pr-tag"></span>
+        <span class="qn" id="pr-n"></span>
+      </div>
+      <div id="pr-live">
+        <p class="setup" id="pr-setup"></p>
+        <h3 class="stem" id="pr-stem"></h3>
+        <div class="opts" id="pr-opts"></div>
+        <div class="fb hide" id="pr-fb">
+          <div class="fbh" id="pr-fbh"></div>
+          <div class="why" id="pr-why"></div>
+          <div class="trap" id="pr-trap"></div>
+        </div>
+        <button class="btn hide" id="pr-next" style="margin-top:20px">Next question</button>
+      </div>
+      <div id="pr-done" style="display:none">
+        <div class="eyebrow" id="pr-dc"></div>
+        <div class="score" id="pr-score"></div>
+        <div class="stack" id="pr-miss" style="margin:22px 0"></div>
+        <button class="btn" id="pr-again">Back to subjects</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CARDS ============ -->
+  <section class="panel" id="p-cards">
+    <div id="cd-home">
+      <div class="sec-head">
+        <h2>Cards</h2>
+        <p>Spaced repetition. Rate each card honestly and it comes back right before you'd forget it &mdash; sooner if you struggled, much later if it was easy.</p>
+      </div>
+      <div class="picker" id="cd-picker"></div>
+    </div>
+    <div id="cd-run" style="display:none">
+      <div class="qhead">
+        <button class="linky" id="cd-back">&larr; All subjects</button>
+        <span class="qtag" id="cd-tag"></span>
+        <span class="qn" id="cd-n"></span>
+      </div>
+      <div class="flash" id="cd-card">
+        <div class="front" id="cd-front"></div>
+        <div class="back hide" id="cd-back-t"></div>
+        <div class="hint" id="cd-hint">Click to reveal</div>
+      </div>
+      <div class="rates hide" id="cd-rates">
+        <button class="rate" data-q="0">Again<small>&lt; 10 min</small></button>
+        <button class="rate" data-q="1">Hard<small>1 day</small></button>
+        <button class="rate" data-q="2">Good<small>3 days</small></button>
+        <button class="rate" data-q="3">Easy<small>6 days</small></button>
+      </div>
+      <div id="cd-empty" style="display:none">
+        <div class="score">Done</div>
+        <p style="color:var(--muted);margin:14px 0 22px">Nothing else due in this subject. Come back when the next batch matures.</p>
+        <button class="btn" id="cd-again">Back to subjects</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ WRITE ============ -->
+  <section class="panel" id="p-write">
+    <div class="sec-head">
+      <h2>Write</h2>
+      <p>Four of your six exams are half free-response. Draft here, then score yourself against the real rubric &mdash; scoring your own writing against the actual criteria is the fastest way to stop losing rubric points.</p>
+    </div>
+    <div id="wr-list"></div>
+  </section>
+
+  <!-- ============ TRACKER ============ -->
+  <section class="panel" id="p-track">
+    <div class="sec-head">
+      <h2>Tracker</h2>
+      <p>Assignments and tests. Tests get a gold edge and outrank everything else &mdash; a Chem test on Thursday is what should crowd out your Psych review on Wednesday.</p>
+    </div>
+    <div class="stack" style="gap:20px">
+      <div class="addbox">
+        <input type="text" id="tk-what" placeholder="What is it? (e.g. Unit 2 problem set)">
+        <select id="tk-cls"></select>
+        <input type="date" id="tk-due">
+        <button class="btn" id="tk-add">Add</button>
+      </div>
+      <div class="row" style="gap:8px">
+        <button class="btn ghost sm" id="tk-kind" data-kind="work">Type: Assignment</button>
+        <span class="eyebrow" id="tk-count"></span>
+      </div>
+      <div class="stack" id="tk-list"></div>
+    </div>
+  </section>
+
+  <!-- ============ WATCH ============ -->
+  <section class="panel" id="p-watch">
+    <div class="sec-head">
+      <h2>Watch</h2>
+      <p>Verified in August 2026 &mdash; checked for whether the channel is still active and whether it teaches your version of the course. Several famous ones don't.</p>
+    </div>
+    <div class="vnote">
+      <b>Start here, before YouTube.</b> College Board gives every AP student a free video library inside AP Classroom, organized by the exact CED unit and topic your class follows. It was renamed from "AP Daily" to "AP Videos" in July 2026. Sign in to My AP, open a course, go to AP Classroom, then Course Guide, then pick a unit and topic. Most students never open it. Nothing on YouTube matches the official framing and scoring language this closely.
+    </div>
+    <div id="wa-list"></div>
+  </section>
+
+  <footer>
+    Progress is saved automatically. Practice questions and cards are written from the official College Board course descriptions and chief reader reports &mdash; they are not retired exam items.
+    <br><br>
+    See also the <a href="https://claude.ai/code/artifact/41a4f8fd-7c2e-45d7-841a-6f50095d1a05">AP Year Map</a>.
+  </footer>
+</div>
+
+
+<div id="state"></div>
+
+<script src="js/data/courses.js"></script>
+<script src="js/data/questions.js"></script>
+<script src="js/data/cards.js"></script>
+<script src="js/data/frq.js"></script>
+<script src="js/data/videos.js"></script>
+<script src="js/state.js"></script>
+<script src="js/views/today.js"></script>
+<script src="js/views/practice.js"></script>
+<script src="js/views/cards.js"></script>
+<script src="js/views/write.js"></script>
+<script src="js/views/tracker.js"></script>
+<script src="js/views/watch.js"></script>
+<script src="js/app.js"></script>
+<script src="js/pwa.js"></script>
+</body>
+</html>
