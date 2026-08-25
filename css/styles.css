@@ -181,3 +181,36 @@
   footer{margin-top:60px;padding-top:22px;border-top:1px solid var(--line);color:var(--muted);font-size:13px;line-height:1.6}
   #state{display:none}
   @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* ---------- update banner ---------- */
+/* Injected by js/pwa.js when the service worker sees changed files.
+   Sits above the safe-area inset so it clears the home indicator on
+   iPhones running the installed app. */
+.updatebar{
+  position:fixed;
+  left:50%;
+  bottom:calc(18px + env(safe-area-inset-bottom, 0px));
+  transform:translate(-50%, 140%);
+  display:flex;align-items:center;gap:12px;
+  max-width:min(440px, calc(100vw - 32px));
+  padding:11px 12px 11px 17px;
+  background:var(--surface);
+  border:1px solid var(--accent);
+  border-radius:6px;
+  box-shadow:var(--shadow);
+  font-size:14.5px;
+  color:var(--ink);
+  z-index:60;
+  transition:transform .28s cubic-bezier(.2,.8,.3,1);
+}
+.updatebar.in{transform:translate(-50%, 0)}
+.updatebar span{flex:1;min-width:0}
+.updatebar .btn{flex:none}
+.updatebar-x{
+  flex:none;background:none;border:0;color:var(--muted);
+  font-size:19px;line-height:1;padding:2px 4px;cursor:pointer;
+}
+.updatebar-x:hover{color:var(--ink)}
+@media (prefers-reduced-motion:reduce){
+  .updatebar{transition:none}
+}
